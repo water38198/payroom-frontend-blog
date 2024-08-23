@@ -19,26 +19,40 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"water38198.github.io","root":"/payroom-frontend-blog/","images":"/payroom-frontend-blog/images","scheme":"Gemini","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/payroom-frontend-blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/payroom-frontend-blog/js/config.js"></script>
 
-    <meta name="description" content="紀錄一些在前端上遇到的問題">
-<meta property="og:type" content="website">
-<meta property="og:title" content="PayRoom&#39;s 前端筆記">
-<meta property="og:url" content="https://water38198.github.io/payroom-frontend-blog/index.html">
+    <meta name="description" content="摺疊基本 HTML + CSS想要實現最單純的折疊的話，其實使用原生的 HTML 標籤就可以辦到。那麼該如何實現呢？答案就是 &lt;details&gt; + &lt;summary&gt;， MDN: details summary  &lt;details&gt; 是外層標籤，會包覆 &lt;summary&gt; 與 其他內容。&lt;summary&gt; 就是顯示在外面的標題，其他的內">
+<meta property="og:type" content="article">
+<meta property="og:title" content="摺疊（Collapse） &amp; 手風琴（Accordion）元件製作">
+<meta property="og:url" content="https://water38198.github.io/payroom-frontend-blog/2024/08/21/%E6%91%BA%E7%96%8A-%E6%89%8B%E9%A2%A8%E7%90%B4%E5%85%83%E4%BB%B6%E8%A3%BD%E4%BD%9C/index.html">
 <meta property="og:site_name" content="PayRoom&#39;s 前端筆記">
-<meta property="og:description" content="紀錄一些在前端上遇到的問題">
+<meta property="og:description" content="摺疊基本 HTML + CSS想要實現最單純的折疊的話，其實使用原生的 HTML 標籤就可以辦到。那麼該如何實現呢？答案就是 &lt;details&gt; + &lt;summary&gt;， MDN: details summary  &lt;details&gt; 是外層標籤，會包覆 &lt;summary&gt; 與 其他內容。&lt;summary&gt; 就是顯示在外面的標題，其他的內">
 <meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://res.cloudinary.com/dofhdwmow/image/upload/v1724187385/collapse-1.gif">
+<meta property="og:image" content="https://res.cloudinary.com/dofhdwmow/image/upload/v1724187027/collapse-2.gif">
+<meta property="og:image" content="https://res.cloudinary.com/dofhdwmow/image/upload/v1724222324/collapse-3.gif">
+<meta property="og:image" content="https://res.cloudinary.com/dofhdwmow/image/upload/v1724224278/collapse-4.gif">
+<meta property="og:image" content="https://res.cloudinary.com/dofhdwmow/image/upload/v1724253438/collapse-5.gif">
+<meta property="og:image" content="https://res.cloudinary.com/dofhdwmow/image/upload/v1724254007/collapse-6.gif">
+<meta property="og:image" content="https://res.cloudinary.com/dofhdwmow/image/upload/v1724309685/collapse-7.gif">
+<meta property="og:image" content="https://res.cloudinary.com/dofhdwmow/image/upload/v1724386661/collapse-8.png">
+<meta property="og:image" content="https://res.cloudinary.com/dofhdwmow/image/upload/v1724397545/collapse-9.gif">
+<meta property="og:image" content="https://res.cloudinary.com/dofhdwmow/image/upload/v1724417679/accordion-1.gif">
+<meta property="og:image" content="https://res.cloudinary.com/dofhdwmow/image/upload/v1724399680/collapse-10.gif">
+<meta property="article:published_time" content="2024-08-20T19:34:50.000Z">
+<meta property="article:modified_time" content="2024-08-23T13:32:47.115Z">
 <meta property="article:author" content="PayRoom Kao">
 <meta property="article:tag" content="前端,Vue,HTML,CSS,JavaScript">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://res.cloudinary.com/dofhdwmow/image/upload/v1724187385/collapse-1.gif">
 
 
-<link rel="canonical" href="https://water38198.github.io/payroom-frontend-blog/">
+<link rel="canonical" href="https://water38198.github.io/payroom-frontend-blog/2024/08/21/%E6%91%BA%E7%96%8A-%E6%89%8B%E9%A2%A8%E7%90%B4%E5%85%83%E4%BB%B6%E8%A3%BD%E4%BD%9C/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-TW","comments":"","permalink":"","path":"index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://water38198.github.io/payroom-frontend-blog/2024/08/21/%E6%91%BA%E7%96%8A-%E6%89%8B%E9%A2%A8%E7%90%B4%E5%85%83%E4%BB%B6%E8%A3%BD%E4%BD%9C/","path":"2024/08/21/摺疊-手風琴元件製作/","title":"摺疊（Collapse） & 手風琴（Accordion）元件製作"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>PayRoom's 前端筆記</title>
+<title>摺疊（Collapse） & 手風琴（Accordion）元件製作 | PayRoom's 前端筆記</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SYJ4VGEVPC"></script>
   <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-SYJ4VGEVPC","only_pageview":false,"measure_protocol_api_secret":null}</script>
@@ -74,7 +88,7 @@
 
     <a href="/payroom-frontend-blog/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">PayRoom's 前端筆記</h1>
+      <p class="site-title">PayRoom's 前端筆記</p>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -127,7 +141,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目錄
@@ -140,6 +154,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%BA%E7%96%8A"><span class="nav-number">1.</span> <span class="nav-text">摺疊</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC-HTML-CSS"><span class="nav-number">1.1.</span> <span class="nav-text">基本 HTML + CSS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A0%90%E8%A8%AD%E5%B1%95%E9%96%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">預設展開</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Marker-%E4%BF%AE%E6%94%B9"><span class="nav-number">1.1.2.</span> <span class="nav-text">Marker 修改</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B1%95%E9%96%8B%E5%8B%95%E7%95%AB"><span class="nav-number">1.1.3.</span> <span class="nav-text">展開動畫</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#max-height"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">max-height</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#grid-template-rows"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">grid-template-rows</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%A1%86%E6%9E%B6"><span class="nav-number">1.2.</span> <span class="nav-text">使用框架</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E9%A2%A8%E7%90%B4"><span class="nav-number">2.</span> <span class="nav-text">手風琴</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.1.</span> <span class="nav-text">&lt;details&gt;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%A1%86%E6%9E%B6-Accordion"><span class="nav-number">2.2.</span> <span class="nav-text">使用框架-Accordion</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%B5%90"><span class="nav-number">3.</span> <span class="nav-text">小結</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -184,16 +199,17 @@
 
     </div>
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="https://water38198.github.io/payroom-frontend-blog/2024/08/21/%E6%91%BA%E7%96%8A-%E6%89%8B%E9%A2%A8%E7%90%B4%E5%85%83%E4%BB%B6%E8%A3%BD%E4%BD%9C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -207,13 +223,13 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | PayRoom's 前端筆記">
+      <meta itemprop="name" content="摺疊（Collapse） & 手風琴（Accordion）元件製作 | PayRoom's 前端筆記">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/payroom-frontend-blog/2024/08/21/%E6%91%BA%E7%96%8A-%E6%89%8B%E9%A2%A8%E7%90%B4%E5%85%83%E4%BB%B6%E8%A3%BD%E4%BD%9C/" class="post-title-link" itemprop="url">摺疊（Collapse） & 手風琴（Accordion）元件製作</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          摺疊（Collapse） & 手風琴（Accordion）元件製作
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -243,6 +259,13 @@
     </span>
 
   
+    <span class="post-meta-item" title="閱讀次數" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">閱讀次數：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
     <span class="post-meta-break"></span>
     <span class="post-meta-item" title="文章字數">
       <span class="post-meta-item-icon">
@@ -266,8 +289,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="摺疊"><a href="#摺疊" class="headerlink" title="摺疊"></a>摺疊</h2><h3 id="基本-HTML-CSS"><a href="#基本-HTML-CSS" class="headerlink" title="基本 HTML + CSS"></a>基本 HTML + CSS</h3><p>想要實現最單純的折疊的話，其實使用原生的 HTML 標籤就可以辦到。<br>那麼該如何實現呢？答案就是 <code>&lt;details&gt;</code> + <code>&lt;summary&gt;</code>，</p>
+    <div class="post-body" itemprop="articleBody"><h2 id="摺疊"><a href="#摺疊" class="headerlink" title="摺疊"></a>摺疊</h2><h3 id="基本-HTML-CSS"><a href="#基本-HTML-CSS" class="headerlink" title="基本 HTML + CSS"></a>基本 HTML + CSS</h3><p>想要實現最單純的折疊的話，其實使用原生的 HTML 標籤就可以辦到。<br>那麼該如何實現呢？答案就是 <code>&lt;details&gt;</code> + <code>&lt;summary&gt;</code>，</p>
 <p>MDN: <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/HTML/Element/details">details</a> <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/summary">summary</a></p>
 <p> <code>&lt;details&gt;</code> 是外層標籤，會包覆 <code>&lt;summary&gt;</code> 與 其他內容。<br><code>&lt;summary&gt;</code> 就是顯示在外面的標題，其他的內容會被隱藏。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">details</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">summary</span>&gt;</span>原生<span class="tag">&lt;/<span class="name">summary</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>這是你的內容<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>這些都會被隱藏<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">details</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -370,7 +392,6 @@
 <p>筆者在上網查詢時，發現 <code>calc-size</code> 與 偽元素 <code>::details-content</code>這兩個酷東西，如果能套用<code>height:calc-size(auto)</code> 似乎就能直接實現動畫收合，而 <code>::details-content</code> 則可以定義 <code>&lt;details&gt;</code> 內容樣式，但很可惜目前還尚未支援。</p>
 <p>文章連結：<a target="_blank" rel="noopener" href="https://blog.webdevsimplified.com/2024-07/css-calc-size/">calc-size</a>   <a target="_blank" rel="noopener" href="https://css-tricks.com/almanac/selectors/d/details-content/">::details-content</a></p>
 
-      
     </div>
 
     
@@ -378,107 +399,22 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/payroom-frontend-blog/2024/08/18/hello-world/" rel="prev" title="Hello World">
+                  <i class="fa fa-angle-left"></i> Hello World
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
     </footer>
   </article>
 </div>
 
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://water38198.github.io/payroom-frontend-blog/2024/08/18/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/payroom-frontend-blog/images/avatar.png">
-      <meta itemprop="name" content="PayRoom Kao">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PayRoom's 前端筆記">
-      <meta itemprop="description" content="紀錄一些在前端上遇到的問題">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | PayRoom's 前端筆記">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/payroom-frontend-blog/2024/08/18/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2024-08-18 15:51:10" itemprop="dateCreated datePublished" datetime="2024-08-18T15:51:10+08:00">2024-08-18</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="文章字數">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">文章字數：</span>
-      <span>78</span>
-    </span>
-    <span class="post-meta-item" title="所需閱讀時間">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>1 分鐘</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
 
 
 
